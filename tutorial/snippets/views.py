@@ -1,13 +1,10 @@
 from django.contrib.auth.models import User
-from rest_framework import generics
-from rest_framework import permissions
 from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer
+from snippets.serializers import SnippetSerializer, UserSerializer
 from snippets.permissions import IsOwnerOrReadOnly
+from rest_framework import permissions, renderers, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import permissions
-from rest_framework import renderers
 
 
 class SnippetViewSet(viewsets.ModelViewSet):
@@ -29,10 +26,6 @@ class SnippetViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
-
-
-from snippets.serializers import UserSerializer
-from rest_framework import viewsets
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
